@@ -88,60 +88,6 @@ public class CustomerServlet extends HttpServlet {
             resp.setStatus(400);
             resp.getWriter().print(error.build());
         }
-
-        /*String option = req.getParameter("option");
-
-                case "delete":
-                    st = DBConnection.getInstance().getConnection().prepareStatement("delete from Customer where id=?");
-                    st.setString(1, id);
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Customer Delete Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }else {
-                        throw new RuntimeException("There is no such customer for that ID...!");
-                    }
-                    break;
-
-                case "update":
-                    st = DBConnection.getInstance().getConnection().prepareStatement("update Customer set name=?,address=?,mobile=?,email=? where id=?");
-                    st.setString(5, id);
-                    st.setString(1, name);
-                    st.setString(2, address);
-                    st.setString(3, mobile);
-                    st.setString(4, email);
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Customer Update Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }else {
-                        throw new RuntimeException("Wrong ID,Please Check The ID.....!");
-                    }
-                    break;
-            }
-
-        } catch (SQLException e) {
-
-        } catch (ClassNotFoundException e) {
-            JsonObjectBuilder error = Json.createObjectBuilder();
-            error.add("state", "Error");
-            error.add("message", e.getMessage());
-            error.add("data", "");
-            resp.setStatus(400);
-            resp.getWriter().print(error.build());
-        }catch (RuntimeException e) {
-            JsonObjectBuilder error = Json.createObjectBuilder();
-            error.add("state", "Error");
-            error.add("message", e.getMessage());
-            error.add("data", "");
-            resp.setStatus(400);
-            resp.getWriter().print(error.build());
-        }*/
-
     }
 
     @Override

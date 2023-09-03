@@ -107,7 +107,7 @@
         let formData = $("#itemForm").serialize();
 
         $.ajax({
-            url: "item?option=save",
+            url: "item",
             method: "post",
             data: formData,
             dataType:"json",
@@ -122,12 +122,24 @@
     });
 
     $("#updateItem").click(function () {
-        let formData = $("#itemForm").serialize();
+        let code = $("#txtCode").val();
+        let itemName = $("#txtItemName").val();
+        let unitPrice = $("#txtPrice").val();
+        let qty = $("#txtQty").val();
+
+        let itemOB={
+            code:code,
+            itemName:itemName,
+            unitPrice:unitPrice,
+            qty:qty
+        }
+
         $.ajax({
-            url: "item?option=update",
-            method: "post",
-            data: formData,
-            dataType:"json",
+            url: "item",
+            method: "put",
+            contentType: "application/json",
+            data: JSON.stringify(itemOB),
+            dataType: "json",
             success: function (res) {
                 alert(res.message);
                 getAllItem();
@@ -141,8 +153,8 @@
     $("#deleteItem").click(function () {
         let code = $("#txtCode").val();
         $.ajax({
-            url: "item?code=" + code + "&option=delete",
-            method: "post",
+            url: "item?code=" + code,
+            method: "delete",
             dataType:"json",
             success: function (res) {
                 alert(res.message);

@@ -119,12 +119,12 @@
             url: "customer",
             method: "post",
             data: formDate,
-            dataType:"json",
+            dataType: "json",
             success: function (res) {
                 alert(res.message);
                 getAllCustomer();
             },
-            error:function (error) {
+            error: function (error) {
                 alert(JSON.parse(error.responseText).message);
             }
         });
@@ -135,12 +135,11 @@
         $.ajax({
             url: "customer?id=" + id,
             method: "delete",
-
             success: function (res) {
                 alert(res.message);
                 getAllCustomer();
             },
-            error:function (error) {
+            error: function (error) {
                 alert(JSON.parse(error.responseText).message);
             }
         });
@@ -165,15 +164,14 @@
         $.ajax({
             url: "customer",
             method: "put",
-            // contentType: "application/json",
+            contentType: "application/json",
             data: JSON.stringify(customerOB),
             dataType: "json",
             success: function (res) {
-                console.log(customerOB)
                 alert(res.message);
                 getAllCustomer();
             },
-            error:function (error) {
+            error: function (error) {
                 alert(JSON.parse(error.responseText).message);
             }
         });

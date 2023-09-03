@@ -2,9 +2,7 @@ package servlet;
 
 import db.DBConnection;
 
-import javax.json.Json;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObjectBuilder;
+import javax.json.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -46,44 +44,51 @@ public class ItemServlet extends HttpServlet {
             resp.getWriter().print(obj.build());
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         }
-
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String itemCode = req.getParameter("code");
-        String itemName = req.getParameter("itemName");
-
-
-        String option = req.getParameter("option");
-
-        PreparedStatement st;
 
         try {
-            switch (option) {
-                case "save":
-                    double unitPrice = Double.parseDouble(req.getParameter("unitPrice"));
-                    int qty = Integer.parseInt(req.getParameter("qty"));
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO item VALUES (?, ?, ?, ?)");
+            st.setString(1, req.getParameter("code"));
+            st.setString(2, req.getParameter("itemName"));
+            st.setDouble(3, Double.parseDouble(req.getParameter("unitPrice")));
+            st.setInt(4, Integer.parseInt(req.getParameter("qty")));
 
-                    st = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO item VALUES (?, ?, ?, ?)");
-                    st.setString(1, itemCode);
-                    st.setString(2, itemName);
-                    st.setDouble(3, unitPrice);
-                    st.setInt(4, qty);
+            if (st.executeUpdate() > 0) {
+                JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                responseObject.add("state", "OK");
+                responseObject.add("message", "Item Save Successfully.... ");
+                responseObject.add("data", "");
+                resp.getWriter().print(responseObject.build());
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }
 
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Item Save Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }
-                    break;
+        /*String option = req.getParameter("option");
+
+
 
                 case "update":
 
@@ -121,6 +126,76 @@ public class ItemServlet extends HttpServlet {
                     break;
             }
 
+        } catch (SQLException | ClassNotFoundException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }catch (RuntimeException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }*/
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try {
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("delete from item where itemCode=?");
+            st.setString(1, req.getParameter("code"));
+            if (st.executeUpdate() > 0) {
+                JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                responseObject.add("state", "OK");
+                responseObject.add("message", "Item Delete Successfully.... ");
+                responseObject.add("data", "");
+                resp.getWriter().print(responseObject.build());
+            }else {
+                throw new RuntimeException("There is no such customer for that ID...!");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }catch (RuntimeException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonReader reader = Json.createReader(req.getReader());
+        JsonObject item = reader.readObject();
+
+        try {
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("update item set itemName=?,unitPrice=?,qty=? where itemCode=?");
+            st.setString(4, item.getString("code"));
+            st.setString(1, item.getString("itemName"));
+            st.setDouble(2, Double.parseDouble(item.getString("unitPrice")));
+            st.setInt(3, Integer.parseInt(item.getString("qty")));
+
+            if (st.executeUpdate() > 0) {
+                JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                responseObject.add("state", "OK");
+                responseObject.add("message", "Item Update Successfully.... ");
+                responseObject.add("data", "");
+                resp.getWriter().print(responseObject.build());
+            }else {
+                throw new RuntimeException("Wrong ID,Please Check The ID.....!");
+            }
         } catch (SQLException | ClassNotFoundException e) {
             JsonObjectBuilder error = Json.createObjectBuilder();
             error.add("state", "Error");

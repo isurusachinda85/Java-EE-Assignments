@@ -78,7 +78,11 @@ public class CustomerServlet extends HttpServlet {
                     st.setString(4, mobile);
                     st.setString(5, email);
                     if (st.executeUpdate() > 0) {
-
+                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                        responseObject.add("state", "OK");
+                        responseObject.add("message", "Customer Save Successfully.... ");
+                        responseObject.add("data", "");
+                        resp.getWriter().print(responseObject.build());
                     }
                     break;
 
@@ -86,7 +90,13 @@ public class CustomerServlet extends HttpServlet {
                     st = DBConnection.getInstance().getConnection().prepareStatement("delete from Customer where id=?");
                     st.setString(1, id);
                     if (st.executeUpdate() > 0) {
-
+                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                        responseObject.add("state", "OK");
+                        responseObject.add("message", "Customer Delete Successfully.... ");
+                        responseObject.add("data", "");
+                        resp.getWriter().print(responseObject.build());
+                    }else {
+                        throw new RuntimeException("There is no such customer for that ID...!");
                     }
                     break;
 
@@ -98,15 +108,38 @@ public class CustomerServlet extends HttpServlet {
                     st.setString(3, mobile);
                     st.setString(4, email);
                     if (st.executeUpdate() > 0) {
-
+                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                        responseObject.add("state", "OK");
+                        responseObject.add("message", "Customer Update Successfully.... ");
+                        responseObject.add("data", "");
+                        resp.getWriter().print(responseObject.build());
+                    }else {
+                        throw new RuntimeException("Wrong ID,Please Check The ID.....!");
                     }
                     break;
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }catch (RuntimeException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         }
 
     }

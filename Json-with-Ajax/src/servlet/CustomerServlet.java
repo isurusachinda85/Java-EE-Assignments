@@ -178,24 +178,17 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         JsonReader reader = Json.createReader(req.getReader());
         JsonObject customer = reader.readObject();
 
-        String id = customer.getString("id");
-        String name = customer.getString("name");
-        String address = customer.getString("address");
-        String mobile = customer.getString("mobile");
-        String email = customer.getString("email");
-
-        System.out.println(id + " " + name + " " + address + " " + mobile + " " + email);
-
         try {
             PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("update Customer set name=?,address=?,mobile=?,email=? where id=?");
-            st.setString(5, id);
-            st.setString(1, name);
-            st.setString(2, address);
-            st.setString(3, mobile);
-            st.setString(4, email);
+            st.setString(5, customer.getString("id"));
+            st.setString(1, customer.getString("name"));
+            st.setString(2, customer.getString("address"));
+            st.setString(3, customer.getString("mobile"));
+            st.setString(4, customer.getString("email"));
             if (st.executeUpdate() > 0) {
                 JsonObjectBuilder responseObject = Json.createObjectBuilder();
                 responseObject.add("state", "OK");

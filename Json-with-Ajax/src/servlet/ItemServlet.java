@@ -85,62 +85,6 @@ public class ItemServlet extends HttpServlet {
             resp.setStatus(400);
             resp.getWriter().print(error.build());
         }
-
-        /*String option = req.getParameter("option");
-
-
-
-                case "update":
-
-                    unitPrice = Double.parseDouble(req.getParameter("unitPrice"));
-                    qty = Integer.parseInt(req.getParameter("qty"));
-
-                    st = DBConnection.getInstance().getConnection().prepareStatement("update item set itemName=?,unitPrice=?,qty=? where itemCode=?");
-                    st.setString(4, itemCode);
-                    st.setString(1, itemName);
-                    st.setDouble(2, unitPrice);
-                    st.setInt(3, qty);
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Item Update Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }else {
-                        throw new RuntimeException("Wrong ID,Please Check The ID.....!");
-                    }
-                    break;
-
-                case "delete":
-                    st = DBConnection.getInstance().getConnection().prepareStatement("delete from item where itemCode=?");
-                    st.setString(1, itemCode);
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Item Delete Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }else {
-                        throw new RuntimeException("There is no such customer for that ID...!");
-                    }
-                    break;
-            }
-
-        } catch (SQLException | ClassNotFoundException e) {
-            JsonObjectBuilder error = Json.createObjectBuilder();
-            error.add("state", "Error");
-            error.add("message", e.getMessage());
-            error.add("data", "");
-            resp.setStatus(400);
-            resp.getWriter().print(error.build());
-        }catch (RuntimeException e) {
-            JsonObjectBuilder error = Json.createObjectBuilder();
-            error.add("state", "Error");
-            error.add("message", e.getMessage());
-            error.add("data", "");
-            resp.setStatus(400);
-            resp.getWriter().print(error.build());
-        }*/
     }
 
     @Override

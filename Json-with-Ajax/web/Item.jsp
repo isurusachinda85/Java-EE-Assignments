@@ -110,8 +110,13 @@
             url: "item?option=save",
             method: "post",
             data: formData,
+            dataType:"json",
             success: function (res) {
+                alert(res.message);
                 getAllItem();
+            },
+            error:function (error) {
+                alert(JSON.parse(error.responseText).message);
             }
         });
     });
@@ -122,8 +127,13 @@
             url: "item?option=update",
             method: "post",
             data: formData,
+            dataType:"json",
             success: function (res) {
+                alert(res.message);
                 getAllItem();
+            },
+            error:function (error) {
+                alert(JSON.parse(error.responseText).message);
             }
         });
     });
@@ -133,8 +143,13 @@
         $.ajax({
             url: "item?code=" + code + "&option=delete",
             method: "post",
+            dataType:"json",
             success: function (res) {
+                alert(res.message);
                 getAllItem();
+            },
+            error:function (error) {
+                alert(JSON.parse(error.responseText).message);
             }
         });
     });
@@ -149,7 +164,6 @@
             url: "item",
             success: function (res) {
                 for (let i of res.data) {
-                    console.log(i)
                     let row = "<tr><td>" + i.code + "</td><td>" + i.itemName + "</td><td>" + i.unitPrice + "</td><td>" + i.qty + "</td><tr>";
                     $("#tblItem").append(row);
                 }

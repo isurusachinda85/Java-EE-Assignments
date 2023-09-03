@@ -46,7 +46,7 @@
         <div class="position-relative  mt-3 mt-lg-2  ">
             <h1 class="text-center bg-info">Customer Manage</h1>
         </div>
-        <form class="p-lg-3">
+        <form class="p-lg-3" id="customerForm">
             <div class="row ">
                 <div class="col-12 col-md-6 mt-4">
                     <input aria-label="Customer ID" id="cusId" name="id" class="form-control" placeholder="Customer ID"
@@ -108,6 +108,67 @@
     </section>
 
 </main>
+<script src="asset/js/jquery-3.7.0.min.js"></script>
+<script>
+
+    $("#saveCustomer").click(function () {
+        let formDate = $("#customerForm").serialize();
+        $.ajax({
+            url: "customer?option=save",
+            method: "post",
+            data: formDate,
+            success: function (res) {
+
+            }
+        });
+    });
+
+    $("#deleteCustomer").click(function () {
+        let id = $("#cusId").val();
+        $.ajax({
+            url: "customer?id=" + id + "&option=delete",
+            method: "post",
+            success: function (res) {
+
+            }
+        });
+    });
+
+    $("#updateCustomer").click(function () {
+        let formData = $("#customerForm").serialize();
+        $.ajax({
+            url: "customer?option=update",
+            method: "post",
+            data: formData,
+            success: function (res) {
+
+            }
+        });
+    });
+
+
+    function trTextAddTextCustomer() {
+        $("#tblCustomer>tr").click(function () {
+            let id = $(this).children().eq(0).text();
+            let name = $(this).children().eq(1).text();
+            let address = $(this).children().eq(2).text();
+            let mobile = $(this).children().eq(3).text();
+            let email = $(this).children().eq(4).text();
+
+            $("#cusId").val(id);
+            $("#cusName").val(name);
+            $("#cusAddress").val(address);
+            $("#cusMobile").val(mobile);
+            $("#cusEmail").val(email);
+        });
+    }
+
+    function clearText() {
+        $("#cusId,#cusName,#cusAddress,#cusMobile,#cusEmail").val("");
+        $("#cusId").val("").focus();
+    }
+
+</script>
 <script src="asset/js/bootstrap.js"></script>
 </body>
 </html>

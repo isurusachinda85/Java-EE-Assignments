@@ -45,7 +45,7 @@
         <div class="position-relative  mt-3 mt-lg-2  ">
             <h1 class="text-center bg-danger">Item Manage</h1>
         </div>
-        <form class="p-lg-3">
+        <form class="p-lg-3" id="itemForm">
             <div class="row ">
                 <div class="col-12 col-md-6 mt-4">
                     <input aria-label="Item Code" class="form-control" id="txtCode" name="code" placeholder="Item Code"

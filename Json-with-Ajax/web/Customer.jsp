@@ -157,7 +157,7 @@
         $.ajax({
             url: "customer",
             success: function (res) {
-                for (let c of res) {
+                for (let c of res.data) {
                     let row = "<tr><td>" + c.id + "</td><td>" + c.name + "</td><td>" + c.address + "</td><td>" + c.mobile + "</td><td>" + c.email + "</td></tr>";
                     $("#tblCustomer").append(row);
                 }

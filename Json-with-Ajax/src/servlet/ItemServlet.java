@@ -37,7 +37,13 @@ public class ItemServlet extends HttpServlet {
             }
 
             resp.addHeader("Content-Type","application/json");
-            resp.getWriter().print(allItem.build());
+
+            JsonObjectBuilder obj = Json.createObjectBuilder();
+            obj.add("state","OK");
+            obj.add("message","Successfully loaded......!");
+            obj.add("data",allItem.build());
+
+            resp.getWriter().print(obj.build());
 
         } catch (SQLException e) {
             e.printStackTrace();

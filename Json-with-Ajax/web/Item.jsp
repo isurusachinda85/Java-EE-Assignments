@@ -148,7 +148,7 @@
         $.ajax({
             url: "item",
             success: function (res) {
-                for (let i of res) {
+                for (let i of res.data) {
                     console.log(i)
                     let row = "<tr><td>" + i.code + "</td><td>" + i.itemName + "</td><td>" + i.unitPrice + "</td><td>" + i.qty + "</td><tr>";
                     $("#tblItem").append(row);

@@ -133,7 +133,7 @@
     $("#deleteCustomer").click(function () {
         let id = $("#cusId").val();
         $.ajax({
-            url: "customer?id=" + id + "&option=delete",
+            url: "customer?id=" + id,
             method: "post",
             dataType: "json",
             success: function (res) {

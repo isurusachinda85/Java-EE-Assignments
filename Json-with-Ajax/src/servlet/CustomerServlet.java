@@ -47,9 +47,19 @@ public class CustomerServlet extends HttpServlet {
             resp.getWriter().print(obj.build());
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
         }
 
     }
@@ -72,7 +82,6 @@ public class CustomerServlet extends HttpServlet {
                 responseObject.add("data", "");
                 resp.getWriter().print(responseObject.build());
             }
-
         } catch (SQLException | ClassNotFoundException e) {
             JsonObjectBuilder error = Json.createObjectBuilder();
             error.add("state", "Error");
@@ -81,8 +90,8 @@ public class CustomerServlet extends HttpServlet {
             resp.setStatus(400);
             resp.getWriter().print(error.build());
         }
-        /*try {
 
+        /*String option = req.getParameter("option");
 
                 case "delete":
                     st = DBConnection.getInstance().getConnection().prepareStatement("delete from Customer where id=?");
@@ -141,12 +150,6 @@ public class CustomerServlet extends HttpServlet {
         }*/
 
     }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-    }
-
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
@@ -155,17 +158,19 @@ public class CustomerServlet extends HttpServlet {
             if (st.executeUpdate() > 0) {
                 JsonObjectBuilder responseObject = Json.createObjectBuilder();
                 responseObject.add("state", "OK");
-                responseObject.add("message", "Successfully Delete.... ");
+                responseObject.add("message", "Customer Delete Successfully.... ");
                 responseObject.add("data", "");
                 resp.getWriter().print(responseObject.build());
-            } else {
+            }else {
                 throw new RuntimeException("There is no such customer for that ID...!");
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 }

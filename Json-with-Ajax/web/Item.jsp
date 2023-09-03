@@ -100,6 +100,9 @@
 <script src="asset/js/jquery-3.7.0.min.js"></script>
 
 <script>
+
+    getAllItem();
+
     $("#saveItem").click(function () {
         let formData = $("#itemForm").serialize();
 
@@ -107,8 +110,8 @@
             url: "item?option=save",
             method: "post",
             data: formData,
-            success:function (res) {
-
+            success: function (res) {
+                getAllItem();
             }
         });
     });
@@ -120,7 +123,7 @@
             method: "post",
             data: formData,
             success: function (res) {
-
+                getAllItem();
             }
         });
     });
@@ -131,10 +134,30 @@
             url: "item?code=" + code + "&option=delete",
             method: "post",
             success: function (res) {
-
+                getAllItem();
             }
         });
     });
+
+    $("#getAllItem").click(function () {
+        getAllItem();
+    });
+
+    function getAllItem() {
+        $("#tblItem").empty();
+        $.ajax({
+            url: "item",
+            success: function (res) {
+                for (let i of res) {
+                    console.log(i)
+                    let row = "<tr><td>" + i.code + "</td><td>" + i.itemName + "</td><td>" + i.unitPrice + "</td><td>" + i.qty + "</td><tr>";
+                    $("#tblItem").append(row);
+                }
+                trTextAddTextItem();
+                clearText();
+            }
+        });
+    }
 
     function trTextAddTextItem() {
         $("#tblItem>tr").click(function () {

@@ -2,6 +2,9 @@ package servlet;
 
 import db.DBConnection;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,12 +12,39 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/item")
 public class ItemServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        try {
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("select * from item");
+            ResultSet rst = st.executeQuery();
+
+            JsonArrayBuilder allItem = Json.createArrayBuilder();
+
+            while (rst.next()) {
+                JsonObjectBuilder item = Json.createObjectBuilder();
+                item.add("code",rst.getString(1));
+                item.add("itemName",rst.getString(2));
+                item.add("unitPrice",rst.getDouble(3));
+                item.add("qty",rst.getInt(4));
+
+                allItem.add(item.build());
+            }
+
+            resp.addHeader("Content-Type","application/json");
+            resp.getWriter().print(allItem.build());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 

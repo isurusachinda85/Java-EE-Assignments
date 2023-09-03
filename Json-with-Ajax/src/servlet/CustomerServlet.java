@@ -28,17 +28,18 @@ public class CustomerServlet extends HttpServlet {
 
             while (rst.next()) {
                 JsonObjectBuilder customer = Json.createObjectBuilder();
-                customer.add("id",rst.getString(1));
-                customer.add("name",rst.getString(2));
-                customer.add("address",rst.getString(3));
-                customer.add("mobile",rst.getString(4));
-                customer.add("email",rst.getString(5));
+                customer.add("id", rst.getString(1));
+                customer.add("name", rst.getString(2));
+                customer.add("address", rst.getString(3));
+                customer.add("mobile", rst.getString(4));
+                customer.add("email", rst.getString(5));
 
                 allCustomer.add(customer.build());
             }
 
-            resp.addHeader("Content-Type","application/json");
+            resp.addHeader("Content-Type", "application/json");
             resp.getWriter().print(allCustomer.build());
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

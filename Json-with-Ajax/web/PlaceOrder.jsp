@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +23,13 @@
                         <a aria-current="page" class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Customer.html">Customer</a>
+                        <a class="nav-link" href="Customer.jsp">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Item.html">Item</a>
+                        <a class="nav-link" href="Item.jsp">Item</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="PlaceOrder.html">Place Order</a>
+                        <a class="nav-link" href="PlaceOrder.jsp">Place Order</a>
                     </li>
                 </ul>
                 <div class="gap-5 col-2" role="search">

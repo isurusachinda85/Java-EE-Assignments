@@ -1,33 +1,35 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Item Form</title>
-    <meta name="viewport" content="width=device-width initial-scale=1 user-scalable=no">
-    <link rel="stylesheet" href="asset/css/bootstrap.css">
+    <meta content="width=device-width initial-scale=1 user-scalable=no" name="viewport">
+    <link href="asset/css/bootstrap.css" rel="stylesheet">
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Pos System</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"
+                    data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                        <a aria-current="page" class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Customer.html">Customer</a>
+                        <a class="nav-link" href="Customer.jsp">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Item.html">Item</a>
+                        <a class="nav-link" href="Item.jsp">Item</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="PlaceOrder.html">Place Order</a>
+                        <a class="nav-link" href="PlaceOrder.jsp">Place Order</a>
                     </li>
                 </ul>
                 <div class="gap-5 col-2" role="search">
@@ -46,26 +48,36 @@
         <form class="p-lg-3">
             <div class="row ">
                 <div class="col-12 col-md-6 mt-4">
-                    <input aria-label="Item Code" class="form-control" placeholder="Item Code" type="text">
-                </div>
-                <div class="mt-4 col-12 col-md-6">
-                    <input aria-label="Item Name" class="form-control" placeholder="Item Name" type="text">
-                </div>
-                <div class="mt-4 col-12 col-md-6">
-                    <input aria-label="Unit Price" class="form-control" placeholder="Unit Price"
+                    <input aria-label="Item Code" class="form-control" id="txtCode" name="code" placeholder="Item Code"
                            type="text">
                 </div>
                 <div class="mt-4 col-12 col-md-6">
-                    <input aria-label="Item Quantity" class="form-control" placeholder="Item Quantity" type="number">
+                    <input aria-label="Item Name" class="form-control" id="txtItemName" name="itemName"
+                           placeholder="Item Name" type="text">
+                </div>
+                <div class="mt-4 col-12 col-md-6">
+                    <input aria-label="Unit Price" class="form-control" id="txtPrice" name="unitPrice"
+                           placeholder="Unit Price"
+                           type="text">
+                </div>
+                <div class="mt-4 col-12 col-md-6">
+                    <input aria-label="Item Quantity" class="form-control" id="txtQty" name="qty"
+                           placeholder="Item Quantity" type="number">
                 </div>
             </div>
         </form>
-            <div class="mt-3">
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-primary" type="button">Save Item</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-success" type="button">Update Item</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-warning" type="button">Search Item</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-danger" type="button">Delete Item</button>
-            </div>
+        <div class="mt-3">
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-primary" id="saveItem" type="button">Save Item
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-success" id="updateItem" type="button">Update Item
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-secondary" id="getAllItem" type="button">Get
+                AllItem
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-warning" type="button">Search Item</button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-danger" id="deleteItem" type="button">Delete Item
+            </button>
+        </div>
         <section>
             <table class="table table-striped mt-5 table table-bordered table-hover text-center">
                 <thead class="bg-danger text-white">
@@ -76,7 +88,7 @@
                     <th scope="col">Item Quantity</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="tblItem">
 
                 </tbody>
             </table>

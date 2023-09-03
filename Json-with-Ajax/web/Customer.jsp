@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +23,13 @@
                         <a aria-current="page" class="nav-link active" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Customer.html">Customer</a>
+                        <a class="nav-link" href="Customer.jsp">Customer</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Item.html">Item</a>
+                        <a class="nav-link" href="Item.jsp">Item</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="PlaceOrder.html">Place Order</a>
+                        <a class="nav-link" href="PlaceOrder.jsp">Place Order</a>
                     </li>
 
                 </ul>
@@ -48,29 +49,44 @@
         <form class="p-lg-3">
             <div class="row ">
                 <div class="col-12 col-md-6 mt-4">
-                    <input aria-label="Customer ID" class="form-control" placeholder="Customer ID" type="text">
-                </div>
-                <div class="mt-4 col-12 col-sm-6 col-md-6">
-                    <input aria-label="Customer Name" class="form-control" placeholder="Customer Name" type="text">
-                </div>
-                <div class="mt-4 col-12 col-sm-6 col-md-6">
-                    <input aria-label="Customer Address" class="form-control" placeholder="Customer Address"
+                    <input aria-label="Customer ID" id="cusId" name="id" class="form-control" placeholder="Customer ID"
                            type="text">
                 </div>
                 <div class="mt-4 col-12 col-sm-6 col-md-6">
-                    <input aria-label="Customer Mobile" class="form-control" placeholder="Customer Mobile" type="tel">
+                    <input aria-label="Customer Name" id="cusName" name="name" class="form-control"
+                           placeholder="Customer Name" type="text">
                 </div>
                 <div class="mt-4 col-12 col-sm-6 col-md-6">
-                    <input aria-label="Customer Email" class="form-control" placeholder="Customer Email" type="email">
+                    <input aria-label="Customer Address" id="cusAddress" name="address" class="form-control"
+                           placeholder="Customer Address"
+                           type="text">
+                </div>
+                <div class="mt-4 col-12 col-sm-6 col-md-6">
+                    <input aria-label="Customer Mobile" id="cusMobile" name="mobile" class="form-control"
+                           placeholder="Customer Mobile" type="tel">
+                </div>
+                <div class="mt-4 col-12 col-sm-6 col-md-6">
+                    <input aria-label="Customer Email" id="cusEmail" name="email" class="form-control"
+                           placeholder="Customer Email" type="email">
                 </div>
             </div>
         </form>
-            <div class="mt-3">
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-primary" type="button">Save Customer</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-success" type="button">Update Customer</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-warning" type="button">Search Customer</button>
-                <button class="col-12 col-sm-4 col-md-2 btn btn-outline-danger" type="button">Delete Customer</button>
-            </div>
+        <div class="mt-3">
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-primary" id="saveCustomer" type="button">Save
+                Customer
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-success" id="updateCustomer" type="button">Update
+                Customer
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-secondary" id="getAllCustomer" type="button">Get All
+                Customer
+            </button>
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-warning" type="button">Search Customer</button>
+
+            <button class="col-12 col-sm-4 col-md-2 btn btn-outline-danger" id="deleteCustomer" type="button">Delete
+                Customer
+            </button>
+        </div>
 
         <section class="col-12">
             <table class="table table-striped mt-4 table table-bordered table-hover text-center">
@@ -83,8 +99,8 @@
                     <th scope="col">Email</th>
                 </tr>
                 </thead>
-                <tbody>
-                
+                <tbody id="tblCustomer">
+
                 </tbody>
             </table>
 

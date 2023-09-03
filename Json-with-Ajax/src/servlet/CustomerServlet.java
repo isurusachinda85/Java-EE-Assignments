@@ -40,9 +40,9 @@ public class CustomerServlet extends HttpServlet {
             resp.addHeader("Content-Type", "application/json");
 
             JsonObjectBuilder obj = Json.createObjectBuilder();
-            obj.add("state","OK");
-            obj.add("message","Successfully loaded......!");
-            obj.add("data",allCustomer.build());
+            obj.add("state", "OK");
+            obj.add("message", "Successfully loaded......!");
+            obj.add("data", allCustomer.build());
 
             resp.getWriter().print(obj.build());
 
@@ -56,35 +56,33 @@ public class CustomerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id = req.getParameter("id");
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String mobile = req.getParameter("mobile");
-        String email = req.getParameter("email");
-
-        String option = req.getParameter("option");
-
-        PreparedStatement st;
 
         try {
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO Customer VALUES (?, ?, ?, ?, ?)");
+            st.setString(1, req.getParameter("id"));
+            st.setString(2, req.getParameter("name"));
+            st.setString(3, req.getParameter("address"));
+            st.setString(4, req.getParameter("mobile"));
+            st.setString(5, req.getParameter("email"));
 
-            switch (option) {
-                case "save":
-                    st = DBConnection.getInstance().getConnection().prepareStatement("INSERT INTO Customer VALUES (?, ?, ?, ?, ?)");
+            if (st.executeUpdate() > 0) {
+                JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                responseObject.add("state", "OK");
+                responseObject.add("message", "Customer Save Successfully.... ");
+                responseObject.add("data", "");
+                resp.getWriter().print(responseObject.build());
+            }
 
-                    st.setString(1, id);
-                    st.setString(2, name);
-                    st.setString(3, address);
-                    st.setString(4, mobile);
-                    st.setString(5, email);
-                    if (st.executeUpdate() > 0) {
-                        JsonObjectBuilder responseObject = Json.createObjectBuilder();
-                        responseObject.add("state", "OK");
-                        responseObject.add("message", "Customer Save Successfully.... ");
-                        responseObject.add("data", "");
-                        resp.getWriter().print(responseObject.build());
-                    }
-                    break;
+        } catch (SQLException | ClassNotFoundException e) {
+            JsonObjectBuilder error = Json.createObjectBuilder();
+            error.add("state", "Error");
+            error.add("message", e.getMessage());
+            error.add("data", "");
+            resp.setStatus(400);
+            resp.getWriter().print(error.build());
+        }
+        /*try {
+
 
                 case "delete":
                     st = DBConnection.getInstance().getConnection().prepareStatement("delete from Customer where id=?");
@@ -140,6 +138,33 @@ public class CustomerServlet extends HttpServlet {
             error.add("data", "");
             resp.setStatus(400);
             resp.getWriter().print(error.build());
+        }*/
+
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("delete from Customer where id=?");
+            st.setString(1, req.getParameter("id"));
+            if (st.executeUpdate() > 0) {
+                JsonObjectBuilder responseObject = Json.createObjectBuilder();
+                responseObject.add("state", "OK");
+                responseObject.add("message", "Successfully Delete.... ");
+                responseObject.add("data", "");
+                resp.getWriter().print(responseObject.build());
+            } else {
+                throw new RuntimeException("There is no such customer for that ID...!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
     }

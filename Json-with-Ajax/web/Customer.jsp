@@ -116,7 +116,7 @@
     $("#saveCustomer").click(function () {
         let formDate = $("#customerForm").serialize();
         $.ajax({
-            url: "customer?option=save",
+            url: "customer",
             method: "post",
             data: formDate,
             dataType:"json",

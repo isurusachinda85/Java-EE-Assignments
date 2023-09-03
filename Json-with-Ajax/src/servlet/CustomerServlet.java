@@ -2,6 +2,9 @@ package servlet;
 
 import db.DBConnection;
 
+import javax.json.Json;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonObjectBuilder;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,10 +24,25 @@ public class CustomerServlet extends HttpServlet {
             PreparedStatement st = DBConnection.getInstance().getConnection().prepareStatement("select * from customer");
             ResultSet rst = st.executeQuery();
 
+            JsonArrayBuilder allCustomer = Json.createArrayBuilder();
+
+            while (rst.next()) {
+                JsonObjectBuilder customer = Json.createObjectBuilder();
+                customer.add("id",rst.getString(1));
+                customer.add("name",rst.getString(2));
+                customer.add("address",rst.getString(3));
+                customer.add("mobile",rst.getString(4));
+                customer.add("email",rst.getString(5));
+
+                allCustomer.add(customer.build());
+            }
+
+            resp.addHeader("Content-Type","application/json");
+            resp.getWriter().print(allCustomer.build());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
     }

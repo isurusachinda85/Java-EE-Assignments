@@ -97,6 +97,65 @@
     </section>
 
 </main>
+<script src="asset/js/jquery-3.7.0.min.js"></script>
+
+<script>
+    $("#saveItem").click(function () {
+        let formData = $("#itemForm").serialize();
+
+        $.ajax({
+            url: "item?option=save",
+            method: "post",
+            data: formData,
+            success:function (res) {
+
+            }
+        });
+    });
+
+    $("#updateItem").click(function () {
+        let formData = $("#itemForm").serialize();
+        $.ajax({
+            url: "item?option=update",
+            method: "post",
+            data: formData,
+            success: function (res) {
+
+            }
+        });
+    });
+
+    $("#deleteItem").click(function () {
+        let code = $("#txtCode").val();
+        $.ajax({
+            url: "item?code=" + code + "&option=delete",
+            method: "post",
+            success: function (res) {
+
+            }
+        });
+    });
+
+    function trTextAddTextItem() {
+        $("#tblItem>tr").click(function () {
+            let code = $(this).children().eq(0).text();
+            let itemName = $(this).children().eq(1).text();
+            let unitPrice = $(this).children().eq(2).text();
+            let qty = $(this).children().eq(3).text();
+
+            $("#txtCode").val(code);
+            $("#txtItemName").val(itemName);
+            $("#txtPrice").val(unitPrice);
+            $("#txtQty").val(qty);
+        });
+    }
+
+    function clearText() {
+        $("#txtCode,#txtItemName,#txtPrice,#txtQty").val("");
+        $("#txtCode").focus();
+    }
+
+</script>
 <script src="asset/js/bootstrap.js"></script>
 </body>
 </html>

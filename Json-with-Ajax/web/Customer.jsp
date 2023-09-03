@@ -111,6 +111,8 @@
 <script src="asset/js/jquery-3.7.0.min.js"></script>
 <script>
 
+    getAllCustomer();
+
     $("#saveCustomer").click(function () {
         let formDate = $("#customerForm").serialize();
         $.ajax({
@@ -118,7 +120,7 @@
             method: "post",
             data: formDate,
             success: function (res) {
-
+                getAllCustomer();
             }
         });
     });
@@ -129,7 +131,7 @@
             url: "customer?id=" + id + "&option=delete",
             method: "post",
             success: function (res) {
-
+                getAllCustomer();
             }
         });
     });
@@ -141,10 +143,29 @@
             method: "post",
             data: formData,
             success: function (res) {
-
+                getAllCustomer();
             }
         });
     });
+
+    $("#getAllCustomer").click(function () {
+        getAllCustomer();
+    });
+
+    function getAllCustomer() {
+        $("#tblCustomer").empty();
+        $.ajax({
+            url: "customer",
+            success: function (res) {
+                for (let c of res) {
+                    let row = "<tr><td>" + c.id + "</td><td>" + c.name + "</td><td>" + c.address + "</td><td>" + c.mobile + "</td><td>" + c.email + "</td></tr>";
+                    $("#tblCustomer").append(row);
+                }
+                trTextAddTextCustomer();
+                clearText();
+            }
+        });
+    }
 
 
     function trTextAddTextCustomer() {
